@@ -72,3 +72,47 @@ img { max-width:100%; height:auto; display:block; }
     max-width: 100% !important;
     overflow-x: hidden !important;
 }
+/* ===== АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА ===== */
+
+@media (max-width: 992px) {
+    .hero-grid, .funnel-visual-grid, .audio-showcase-grid, .price-grid, .contacts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+    
+    .packages, .cta-steps {
+        grid-template-columns: 1fr !important; /* Перестраиваем всё в 1 колонку */
+    }
+
+    .nav-links { display: none !important; } /* Скрываем десктопное меню */
+    .burger { display: flex !important; }
+    
+    .hero { padding-top: 100px !important; text-align: center; }
+    h1 { font-size: 2rem !important; }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 20px !important; }
+    
+    .calculator-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .btn, .btn-big {
+        width: 100% !important;
+        text-align: center;
+        padding: 16px 20px !important;
+    }
+}
+
+/* Финальный предохранитель от горизонтального скролла */
+body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    position: relative;
+}
+
+* {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
