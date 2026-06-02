@@ -130,3 +130,36 @@ body, html {
         width: 100% !important;
     }
 }
+/* ===== АДАПТИВНАЯ КОРРЕКЦИЯ ДЛЯ ВСЕХ СЕТОК ===== */
+@media (max-width: 992px) {
+    /* 1. Убираем сетку для всех ключевых блоков */
+    .hero-grid, 
+    .packages, 
+    .cards-grid, 
+    .funnel-visual-grid, 
+    .price-grid, 
+    .contacts-grid, 
+    .audio-showcase-grid, 
+    .playground-grid, 
+    .calculator-grid, 
+    .cta-steps {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important; /* На всякий случай */
+        gap: 30px !important;
+    }
+
+    /* 2. Делаем контейнер более узким для мобильных */
+    .container {
+        padding: 0 15px !important;
+    }
+
+    /* 3. Оптимизируем отступы для заголовков и текста */
+    .hero {
+        padding: 100px 0 50px !important;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem !important;
+    }
+}
