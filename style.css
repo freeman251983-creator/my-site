@@ -455,3 +455,24 @@ body {
 * {
   max-width: 100vw;
 }
+/* Исправление «вылетающего» контента */
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Скрывает всё, что пытается вылезти за пределы экрана */
+}
+
+/* Принудительная адаптация всех блоков */
+.container, .hero-grid, .cards-3, .packages, .cta-steps {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* Сброс ширины для всех элементов */
+* {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
