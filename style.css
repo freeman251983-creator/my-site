@@ -582,3 +582,19 @@ h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); fon
     padding: 0 15px !important;
   }
 }
+/* Добавьте это в конец вашего CSS файла */
+@media (max-width: 768px) {
+    .hero-grid {
+        display: flex !important; /* Переключаем на вертикальное отображение */
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    
+    /* Дополнительно убедитесь, что контейнеры не имеют фиксированной ширины */
+    .container {
+        width: 100% !important;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+}
