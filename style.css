@@ -533,3 +533,31 @@ html, body {
     padding-right: 10px !important;
   }
 }
+/* --- ФИКС ДЛЯ ПЕРВОГО БЛОКА (BANNER & PORTRAIT) --- */
+@media (max-width: 768px) {
+  /* Принудительно ограничиваем ширину первой секции */
+  .hero, #hero, .hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 20px 10px !important;
+    margin: 0 !important;
+  }
+
+  /* Исправление портрета */
+  .portrait-card-9-16, .hero img {
+    max-width: 100% !important;
+    width: 280px !important; /* Уменьшаем размер для мобильных */
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  /* Исправление баннера */
+  .hero-banner, .banner-image {
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+}
