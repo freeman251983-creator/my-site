@@ -403,190 +403,39 @@ h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); fon
   will-change: transform, opacity; 
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-/* --- ДОПОЛНИТЕЛЬНАЯ МОБИЛЬНАЯ АДАПТАЦИЯ --- */
-
+/* --- ФИНАЛЬНАЯ АДАПТАЦИЯ (ЕДИНЫЙ БЛОК) --- */
 @media (max-width: 768px) {
-  /* Уменьшаем отступы для узких экранов */
-  .container {
-    padding: 0 15px;
-  }
-
-  /* Исправление заголовков, чтобы они не вылезали за экран */
-  h1 {
-    font-size: 1.8rem !important;
-  }
-  h2 {
-    font-size: 1.5rem !important;
-  }
-
-  /* Сброс сетки для всех блоков с классами карточек */
-  .cards-3, .packages, .cta-steps {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-
-  /* Корректировка формы заявки */
-  .form-container {
-    padding: 20px !important;
-  }
-  
-  input, button {
-    width: 100% !important;
-    font-size: 16px !important; /* Предотвращает зум в iOS при клике на поле */
-  }
-}
-
-/* Настройки для очень маленьких телефонов */
-@media (max-width: 480px) {
-  .hero-grid {
-    padding-top: 20px;
-  }
-  
-  .portrait-card-9-16 {
-    max-width: 240px;
-  }
-}
-
-/* Гарантия того, что никакие блоки не будут шире экрана */
-body {
-  overflow-x: hidden;
-}
-
-* {
-  max-width: 100vw;
-}
-/* Исправление «вылетающего» контента */
-html, body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Скрывает всё, что пытается вылезти за пределы экрана */
-}
-
-/* Принудительная адаптация всех блоков */
-.container, .hero-grid, .cards-3, .packages, .cta-steps {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-
-/* Сброс ширины для всех элементов */
-* {
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-}
-/* --- ФИНАЛЬНЫЙ ФИКС ДЛЯ МОБИЛЬНЫХ --- */
-@media (max-width: 768px) {
-  /* Запрещаем элементам быть шире экрана */
-  html, body {
-    width: 100% !important;
+  /* Сброс для всей страницы */
+  body, html {
     overflow-x: hidden !important;
-    position: relative;
-  }
-
-  /* Сбрасываем ширину контейнеров */
-  .container, .hero-grid, .playground-grid, .cards-3, .packages {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Исправление карточек, чтобы они не раздвигали экран */
-  .portrait-card-9-16 {
     width: 100% !important;
-    max-width: 280px !important;
-    margin: 0 auto !important;
   }
 
-  /* Отключаем возможные горизонтальные скроллы */
+  /* Универсальный "предохранитель" от растягивания */
   * {
     max-width: 100vw !important;
     box-sizing: border-box !important;
   }
-}
-/* --- АГРЕССИВНОЕ ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ --- */
-@media (max-width: 768px) {
-  /* Принудительно ограничиваем всё тело страницы */
-  body, html {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
 
-  /* Запрещаем ВСЕМ элементам выходить за ширину окна */
-  *, *:before, *:after {
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Ищем "виновников" в первой секции (Hero) */
-  .hero, .hero-grid, .nav {
-    width: 100vw !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-}
-/* --- ФИКС ДЛЯ ПЕРВОГО БЛОКА (BANNER & PORTRAIT) --- */
-@media (max-width: 768px) {
-  /* Принудительно ограничиваем ширину первой секции */
-  .hero, #hero, .hero-grid {
+  /* Исправление первой секции (Баннер + Портрет) */
+  .hero-grid {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    padding: 20px 15px !important;
+    text-align: center !important;
+  }
+
+  /* Ограничение портрета */
+  .portrait-card-9-16 {
+    max-width: 250px !important;
     width: 100% !important;
-    max-width: 100vw !important;
-    padding: 20px 10px !important;
-    margin: 0 !important;
+    margin: 20px auto !important;
   }
 
-  /* Исправление портрета */
-  .portrait-card-9-16, .hero img {
-    max-width: 100% !important;
-    width: 280px !important; /* Уменьшаем размер для мобильных */
-    height: auto !important;
-    margin: 0 auto !important;
-  }
-
-  /* Исправление баннера */
-  .hero-banner, .banner-image {
-    width: 100% !important;
-    max-width: 100% !important;
-    object-fit: contain !important;
-  }
-}
-/* --- ЖЕСТКАЯ ФИКСАЦИЯ ПЕРВОГО БЛОКА --- */
-@media (max-width: 768px) {
-  /* Полностью переопределяем секцию hero */
-  .hero, .hero-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    padding: 20px 10px !important;
-    overflow-x: hidden !important;
-  }
-
-  /* Портрет и баннер внутри hero */
-  .hero img, .hero-banner, .portrait-card-9-16 {
-    width: 100% !important;
-    max-width: 300px !important; /* Ограничиваем размер, чтобы поместилось */
-    height: auto !important;
-    margin: 0 auto !important;
-    object-fit: contain !important;
-  }
-
-  /* Если есть заголовок, который растягивает экран */
-  .hero h1 {
-    font-size: 1.6rem !important;
-    word-break: break-word !important;
+  /* Все сетки ставим в одну колонку */
+  .cards-3, .playground-grid, .packages, .cta-steps {
+    grid-template-columns: 1fr !important;
+    padding: 0 15px !important;
   }
 }
