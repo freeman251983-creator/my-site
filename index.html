@@ -3,26 +3,65 @@
 <head>
 <meta name="google-site-verification" content="6loS65rszRFkUZ5ABo-RQK7phaOrk19GCz0DjtOxM_g" />
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AI Media & Content Creator | Сергей Абрамчук</title>
-  <meta name="description" content="Генерация нейросессий, вирусных видео, высококонверсионных карточек для маркетплейсов, копирайтинга и нейро-музыки. Сергей Абрамчук — AI Creator.">
+  <meta name="description" content="Генерация нейросессий, вирусных видео, высококонверсионных карточек для маркетплейсов, копирайтинга и нейро-музыки.">
   <meta name="theme-color" content="#0a0b10">
 
-  <meta property="og:title" content="AI Media Engine | Сергей Абрамчук">
-  <meta property="og:description" content="Виртуальные нейросессии, взрывные Reels/Shorts, сочные карточки для маркетплейсов, ИИ-копирайтинг и нейро-музыка под ключ.">
-  <meta property="og:image" content="images/baner.png">
-  <meta property="og:type" content="website">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-  <link class="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="images/logo.png">
+  <style>
+    /* === ДОПОЛНИТЕЛЬНЫЕ МОБИЛЬНЫЕ СТИЛИ === */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+    }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;0,900;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  
-  <link rel="preload" href="images/portrait.png" as="image" fetchpriority="high">
-  <link rel="preload" href="images/logo.png" as="image">
-  <link rel="preload" href="images/baner.png" as="image">
+    @media (max-width: 992px) {
+      .hero-grid,
+      .funnel-visual-grid,
+      .price-grid,
+      .contacts-grid,
+      .playground-grid,
+      .audio-showcase-grid,
+      .calculator-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+      }
+
+      .hero {
+        padding: 120px 0 80px;
+        text-align: center;
+      }
+
+      .portrait-card-9-16 {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .packages, .cards-grid, .cta-steps {
+        grid-template-columns: 1fr !important;
+      }
+
+      .btn, .btn-big {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: clamp(1.9rem, 9vw, 2.6rem) !important;
+      }
+      .portrait-card-9-16 {
+        max-width: 240px;
+      }
+    }
+  </style>
+</head>
 
   <style>
     /* ===== ПЕРЕМЕННЫЕ ДИНАМИЧЕСКИХ НЕОНОВЫХ ТЕМ ===== */
