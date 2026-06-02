@@ -1,4 +1,4 @@
-﻿/* ===== RESET & BASE ===== */
+/* ===== RESET & BASE ===== */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -403,3 +403,55 @@ h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); fon
   will-change: transform, opacity; 
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+/* --- ДОПОЛНИТЕЛЬНАЯ МОБИЛЬНАЯ АДАПТАЦИЯ --- */
+
+@media (max-width: 768px) {
+  /* Уменьшаем отступы для узких экранов */
+  .container {
+    padding: 0 15px;
+  }
+
+  /* Исправление заголовков, чтобы они не вылезали за экран */
+  h1 {
+    font-size: 1.8rem !important;
+  }
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  /* Сброс сетки для всех блоков с классами карточек */
+  .cards-3, .packages, .cta-steps {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* Корректировка формы заявки */
+  .form-container {
+    padding: 20px !important;
+  }
+  
+  input, button {
+    width: 100% !important;
+    font-size: 16px !important; /* Предотвращает зум в iOS при клике на поле */
+  }
+}
+
+/* Настройки для очень маленьких телефонов */
+@media (max-width: 480px) {
+  .hero-grid {
+    padding-top: 20px;
+  }
+  
+  .portrait-card-9-16 {
+    max-width: 240px;
+  }
+}
+
+/* Гарантия того, что никакие блоки не будут шире экрана */
+body {
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100vw;
+}
