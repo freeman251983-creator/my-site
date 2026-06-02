@@ -116,3 +116,17 @@ body, html {
     max-width: 100% !important;
     box-sizing: border-box !important;
 }
+@media (max-width: 768px) {
+    /* Принудительно отменяем все ширины для всех элементов */
+    * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Исправляем сетки */
+    .hero-grid, .packages, .cards-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+}
