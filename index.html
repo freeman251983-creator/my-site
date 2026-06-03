@@ -85,6 +85,9 @@
       font-size: 17px;
       line-height: 1.7;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
       transition: background 0.5s ease;
     }
     a { text-decoration:none; color:inherit; }
@@ -952,11 +955,28 @@
 
       .burger { display:flex; }
       .nav-links {
-        position: fixed; top: 0; right: -100%; width: 80%; max-width: 380px; height: 100vh;
+        position: fixed; top: 0; right: 0; width: min(82vw, 380px); max-width: calc(100vw - 24px); height: 100dvh;
         background: rgba(4, 5, 8, 0.98); flex-direction: column; padding: 140px 40px; gap: 30px;
-        transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); z-index: 1050;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        clip-path: inset(0 0 0 100%);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        transition: clip-path 0.36s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.2s ease, visibility 0s linear 0.36s;
+        z-index: 1050;
+        will-change: clip-path, opacity;
+        contain: layout paint style;
       }
-      .nav-links.open { right: 0; }
+      .nav-links.open {
+        clip-path: inset(0 0 0 0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: clip-path 0.36s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.2s ease, visibility 0s linear 0s;
+      }
     }
 
     /* Оптимизация анимации скролла */
@@ -967,6 +987,122 @@
       will-change: transform, opacity; 
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+  
+/* ============================================
+   MOBILE FIX — горизонтальная прокрутка вкладок
+   и устранение overflow страницы
+   ============================================ */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip; /* строго обрезает даже fixed/transform-элементы */
+}
+body { position: relative; overscroll-behavior-x: none; }
+
+@media (max-width: 768px) {
+  main,
+  .header,
+  .hero,
+  .section,
+  .comparison-section,
+  .footer {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .container,
+  .hero > .container,
+  .hero-grid,
+  .hero-text,
+  .hero-portrait-wrap {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .landing-mode-selector {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: calc(100vw - 32px) !important;
+    width: 100%;
+    display: flex !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    border-radius: 30px;
+    padding: 5px;
+    gap: 4px;
+    margin: 10px 0 25px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 5px;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    /* iOS-оптимизация: композитный слой + изоляция перерисовки */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: scroll-position;
+    contain: layout paint style;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+  .landing-mode-selector::-webkit-scrollbar { display: none; }
+
+  .mode-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    padding: 9px 16px;
+    letter-spacing: 0.5px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .container { padding: 0 16px; }
+
+  .cards-3, .packages, .cta-steps,
+  .funnel-visual-grid, .price-grid,
+  .contacts-grid, .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero { padding: 110px 0 60px; min-height: auto; }
+  .hero-grid { gap: 40px; text-align: center; }
+  .portrait-card-9-16 { max-width: 260px; margin: 0 auto; }
+
+  .section { padding: 70px 0; background-attachment: scroll; }
+
+  .hero-buttons { justify-content: center; }
+  .btn, .btn-big { width: 100%; justify-content: center; padding: 16px 24px; font-size: 1rem; }
+
+  h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .lead { font-size: 1.1rem; margin-bottom: 35px; }
+  blockquote { font-size: 1.05rem; padding: 18px; margin: 20px 0 30px; }
+
+  .card-body, .pkg, .contact-info, .formula-card { padding: 24px 20px; }
+  .cta-steps { gap: 18px; }
+
+  img, video, iframe { max-width: 100%; height: auto; }
+}
+
+@media (max-width: 380px) {
+  .logo-text { font-size: 1.1rem; letter-spacing: 2px; }
+  .logo-img-small { width: 54px; height: 54px; }
+  .nav { height: 72px; }
+  .mode-tab { font-size: 0.7rem; padding: 8px 14px; }
+}
+
   </style>
 </head>
 
@@ -2037,6 +2173,11 @@ landingTabs.forEach(tab => {
     // Переключаем активный таб
     landingTabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+
+    // Автопрокрутка активной вкладки в видимую область (для мобильных)
+    if (tab.scrollIntoView) {
+      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
     
     // Переключаем тему на body
     document.body.setAttribute('data-theme', mode === 'general' ? '' : mode);
