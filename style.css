@@ -119,7 +119,7 @@ img { max-width:100%; height:auto; display:block; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-image: url('images/baner.png');
+  background-image: url('images/baner.webp');
   background-size: cover;
   background-position: center;
   filter: blur(2px);
@@ -215,14 +215,14 @@ blockquote {
   position: relative; 
   z-index: 10; 
   padding: 120px 0;
-  background-image: linear-gradient(to bottom, rgba(6, 7, 10, 0.92), rgba(6, 7, 10, 0.96)), url('images/baner.png');
+  background-image: linear-gradient(to bottom, rgba(6, 7, 10, 0.92), rgba(6, 7, 10, 0.96)), url('images/baner.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-blend-mode: multiply;
 }
 .section-dark { 
-  background-image: linear-gradient(to bottom, rgba(15, 17, 26, 0.95), rgba(6, 7, 10, 0.98)), url('images/baner.png');
+  background-image: linear-gradient(to bottom, rgba(15, 17, 26, 0.95), rgba(6, 7, 10, 0.98)), url('images/baner.webp');
 }
 
 .badge {
