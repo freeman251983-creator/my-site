@@ -1293,6 +1293,489 @@ body { position: relative; overscroll-behavior-x: none; }
       .custom-cursor, .cursor-trail, #webgl-bg { display: none !important; }
     }
 
+
+
+/* ============================================
+   НОВЫЕ БЛОКИ: СТАТИСТИКА, ГЕНЕРАТОР, ЧАТ, ТЕМА
+   ============================================ */
+
+/* ===== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ===== */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.1);
+}
+
+/* Светлая тема */
+body.light-theme {
+  background: 
+    linear-gradient(135deg, rgba(245, 247, 250, 0.92) 0%, rgba(245, 247, 250, 0.88) 50%, rgba(245, 247, 250, 0.92) 100%),
+    url('images/baner.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #1e293b;
+}
+body.light-theme .header {
+  background: rgba(245, 247, 250, 0.9);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .nav-links a {
+  color: #64748b;
+}
+body.light-theme .nav-links a:hover {
+  color: #0f172a;
+}
+body.light-theme .logo-text {
+  color: #0f172a;
+}
+body.light-theme .section {
+  background: linear-gradient(to bottom, rgba(245, 247, 250, 0.85), rgba(245, 247, 250, 0.90));
+}
+body.light-theme .section-dark {
+  background: linear-gradient(to bottom, rgba(235, 238, 244, 0.88), rgba(245, 247, 250, 0.92));
+}
+body.light-theme .card,
+body.light-theme .pkg,
+body.light-theme .stat-card,
+body.light-theme .prompt-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+body.light-theme .card-body h3,
+body.light-theme .pkg h3,
+body.light-theme .stat-label,
+body.light-theme h2 {
+  color: #0f172a;
+}
+body.light-theme .card-body p,
+body.light-theme .pkg ul li,
+body.light-theme .stat-desc,
+body.light-theme .lead {
+  color: #475569;
+}
+body.light-theme blockquote {
+  background: rgba(0, 0, 0, 0.03);
+  color: #475569;
+}
+body.light-theme .btn-secondary {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+body.light-theme .btn-secondary:hover {
+  background: #0f172a;
+  color: #fff;
+}
+body.light-theme .theme-toggle {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* ===== СТАТИСТИКА ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+.stat-card {
+  background: rgba(10, 11, 16, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 40px 25px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--glow-color);
+  box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
+}
+.stat-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--glow-color);
+  line-height: 1;
+  margin-bottom: 10px;
+  display: inline;
+}
+.stat-suffix {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--glow-accent);
+  display: inline;
+  margin-left: 2px;
+}
+.stat-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.stat-desc {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 2.5rem; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== ГЕНЕРАТОР ПРОМПТОВ ===== */
+.prompt-card {
+  background: rgba(10, 11, 16, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  padding: 40px;
+  margin-top: 50px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+.prompt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+}
+.prompt-group {
+  margin-bottom: 20px;
+}
+.prompt-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
+.prompt-group select,
+.prompt-group input {
+  width: 100%;
+  padding: 14px;
+  background: rgba(4, 5, 8, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.prompt-group select:focus,
+.prompt-group input:focus {
+  border-color: var(--glow-color);
+}
+.prompt-output {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.prompt-result-box {
+  background: rgba(4, 5, 8, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.prompt-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--glow-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.prompt-text {
+  font-family: 'Montserrat', monospace;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  line-height: 1.7;
+  flex: 1;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  min-height: 120px;
+}
+
+@media (max-width: 992px) {
+  .prompt-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== AI-ЧАТ ВИДЖЕТ ===== */
+.ai-chat-widget {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  font-family: 'Montserrat', sans-serif;
+}
+.ai-chat-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--theme-gradient);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 8px 30px rgba(124, 91, 245, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+}
+.ai-chat-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(124, 91, 245, 0.6);
+}
+.ai-chat-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--glow-color);
+  animation: chatPulse 2s ease-in-out infinite;
+  opacity: 0;
+}
+@keyframes chatPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.ai-chat-panel {
+  position: absolute;
+  bottom: 75px;
+  right: 0;
+  width: 360px;
+  max-width: calc(100vw - 40px);
+  background: rgba(10, 11, 16, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.ai-chat-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.ai-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: linear-gradient(90deg, rgba(124, 91, 245, 0.2), rgba(56, 189, 248, 0.2));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ai-chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--theme-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+.ai-chat-info { flex: 1; }
+.ai-chat-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+.ai-chat-status {
+  font-size: 0.8rem;
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ai-chat-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: statusBlink 2s ease-in-out infinite;
+}
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.ai-chat-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+.ai-chat-close:hover { color: #fff; }
+
+.ai-chat-messages {
+  padding: 20px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.ai-chat-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ai-chat-message.ai-message {
+  align-items: flex-start;
+}
+.ai-chat-message.user-message {
+  align-items: flex-end;
+}
+.ai-chat-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.ai-message .ai-chat-bubble {
+  background: rgba(124, 91, 245, 0.15);
+  border: 1px solid rgba(124, 91, 245, 0.2);
+  color: #e2e8f0;
+  border-bottom-left-radius: 4px;
+}
+.user-message .ai-chat-bubble {
+  background: var(--theme-gradient);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.ai-chat-time {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.ai-chat-quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 20px 15px;
+}
+.ai-chat-quick-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.ai-chat-quick-btn:hover {
+  background: rgba(124, 91, 245, 0.2);
+  border-color: var(--glow-secondary);
+  color: #fff;
+}
+
+.ai-chat-input-area {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ai-chat-input-area input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+}
+.ai-chat-input-area input:focus {
+  border-color: var(--glow-color);
+}
+.ai-chat-input-area input::placeholder {
+  color: #64748b;
+}
+.ai-chat-send {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--theme-gradient);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.ai-chat-send:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 480px) {
+  .ai-chat-widget {
+    bottom: 20px;
+    right: 20px;
+  }
+  .ai-chat-panel {
+    width: calc(100vw - 40px);
+    right: -10px;
+  }
+}
+
+/* Typing indicator */
+.ai-typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+}
+.ai-typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--glow-color);
+  border-radius: 50%;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+.ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
   </style>
 </head>
 
@@ -1319,6 +1802,11 @@ body { position: relative; overscroll-behavior-x: none; }
       <a href="#packages">Пакеты</a>
       <a href="#contact">Контакты</a>
     </nav>
+
+    <!-- Переключатель темы -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Переключить тему">
+      <span class="theme-icon">🌙</span>
+    </button>
     <button class="burger" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
@@ -1423,6 +1911,60 @@ body { position: relative; overscroll-behavior-x: none; }
   </div>
 </section>
 
+<!-- ГЕНЕРАТОР ПРОМПТОВ -->
+<section id="prompt-generator" class="section section-dark">
+  <div class="container">
+    <span class="badge reveal">Бесплатный инструмент</span>
+    <h2 class="reveal">Генератор ИИ-промптов:<br>Создайте <span class="grad">продающий промпт за 10 секунд</span></h2>
+    <p class="lead reveal">Выберите тип контента, стиль и целевую аудиторию — получите готовый промпт для Midjourney, Stable Diffusion или DALL-E.</p>
+
+    <div class="prompt-card reveal">
+      <div class="prompt-grid">
+        <div class="prompt-inputs">
+          <div class="prompt-group">
+            <label>Тип контента</label>
+            <select id="promptType">
+              <option value="product">📦 Фото товара для маркетплейса</option>
+              <option value="model">👤 ИИ-модель в одежде</option>
+              <option value="banner">🎯 Рекламный баннер</option>
+              <option value="social">📱 Пост для соцсетей</option>
+              <option value="video">🎬 Сценарий для Reels</option>
+            </select>
+          </div>
+          <div class="prompt-group">
+            <label>Стиль</label>
+            <select id="promptStyle">
+              <option value="cyberpunk">🌃 Cyberpunk / Неон</option>
+              <option value="luxury">💎 Luxury / Премиум</option>
+              <option value="minimal">⬜ Минимализм</option>
+              <option value="lifestyle">🏠 Lifestyle / Бытовой</option>
+              <option value="studio">📸 Студийный свет</option>
+            </select>
+          </div>
+          <div class="prompt-group">
+            <label>Описание товара (кратко)</label>
+            <input type="text" id="promptDesc" placeholder="Например: красные кроссовки Nike, белая футболка оверсайз...">
+          </div>
+          <button id="generatePromptBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            ✨ Сгенерировать промпт
+          </button>
+        </div>
+
+        <div class="prompt-output">
+          <div class="prompt-result-box">
+            <div class="prompt-label">Ваш готовый промпт:</div>
+            <div id="promptResult" class="prompt-text">Выберите параметры и нажмите «Сгенерировать промпт»</div>
+            <button id="copyPromptBtn" class="btn btn-secondary" style="margin-top: 15px; padding: 10px 20px; font-size: 0.9rem;">
+              📋 Копировать
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- СЕКЦИЯ ПРОБЛЕМЫ -->
 <section id="problem" class="section">
   <div class="container">
@@ -1526,6 +2068,42 @@ body { position: relative; overscroll-behavior-x: none; }
     </div>
   </div>
 </section>
+
+<!-- СТАТИСТИКА И ДОСТИЖЕНИЯ -->
+<section id="stats" class="section">
+  <div class="container">
+    <span class="badge reveal">Цифры говорят сами</span>
+    <h2 class="reveal">Результаты в <span class="grad-orange">цифрах</span></h2>
+    <p class="lead reveal">Не верьте на слово — вот что показывают реальные метрики наших клиентов после перехода на ИИ-продакшн.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-number" data-target="150">0</div>
+        <div class="stat-label">Выполненных проектов</div>
+        <div class="stat-desc">Нейросессии, видео, карточки, тексты и аудио</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number" data-target="47">0</div>
+        <div class="stat-suffix">%</div>
+        <div class="stat-label">Средний рост CTR</div>
+        <div class="stat-desc">На карточках маркетплейсов после редизайна</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number" data-target="3">0</div>
+        <div class="stat-suffix">×</div>
+        <div class="stat-label">Ускорение производства</div>
+        <div class="stat-desc">Время от идеи до публикации сократилось втрое</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number" data-target="97">0</div>
+        <div class="stat-suffix">%</div>
+        <div class="stat-label">Довольных клиентов</div>
+        <div class="stat-desc">Возвращаются за повторными заказами</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- СЕКЦИЯ НЕЙРО-ЗВУКА И ИИ-МУЗЫКИ -->
 <section id="audio-production" class="section">
@@ -2584,5 +3162,281 @@ if (form) {
 </script>
 
   <script src="effects.js"></script>
+
+<!-- AI-ЧАТ ВИДЖЕТ -->
+<div id="aiChatWidget" class="ai-chat-widget">
+  <button id="aiChatToggle" class="ai-chat-toggle" aria-label="Открыть чат с AI-ассистентом">
+    <span class="ai-chat-icon">🤖</span>
+    <span class="ai-chat-pulse"></span>
+  </button>
+
+  <div id="aiChatPanel" class="ai-chat-panel">
+    <div class="ai-chat-header">
+      <div class="ai-chat-avatar">🤖</div>
+      <div class="ai-chat-info">
+        <div class="ai-chat-name">AI-Ассистент Freeman</div>
+        <div class="ai-chat-status">Онлайн</div>
+      </div>
+      <button id="aiChatClose" class="ai-chat-close" aria-label="Закрыть">✕</button>
+    </div>
+
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-chat-message ai-message">
+        <div class="ai-chat-bubble">Привет! Я AI-ассистент Сергея. Задайте вопрос о ИИ-продакшне — я моментально отвечу или свяжу вас с Сергеем лично.</div>
+        <div class="ai-chat-time">Сейчас</div>
+      </div>
+    </div>
+
+    <div class="ai-chat-quick-replies">
+      <button class="ai-chat-quick-btn" data-question="Сколько стоит нейросессия?">💰 Стоимость</button>
+      <button class="ai-chat-quick-btn" data-question="Какие сроки изготовления?">⏱ Сроки</button>
+      <button class="ai-chat-quick-btn" data-question="Можно ли увидеть примеры работ?">📸 Примеры</button>
+      <button class="ai-chat-quick-btn" data-question="Как начать сотрудничество?">🚀 Начать</button>
+    </div>
+
+    <div class="ai-chat-input-area">
+      <input type="text" id="aiChatInput" placeholder="Напишите сообщение...">
+      <button id="aiChatSend" class="ai-chat-send">➤</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// ===== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ =====
+(function() {
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle.querySelector('.theme-icon');
+  const body = document.body;
+
+  // Проверяем сохранённую тему
+  const savedTheme = localStorage.getItem('freeman-theme');
+  if (savedTheme === 'light') {
+    body.classList.add('light-theme');
+    themeIcon.textContent = '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('light-theme');
+    const isLight = body.classList.contains('light-theme');
+    themeIcon.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('freeman-theme', isLight ? 'light' : 'dark');
+  });
+})();
+
+// ===== АНИМИРОВАННЫЕ СЧЁТЧИКИ СТАТИСТИКИ =====
+(function() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+
+  const animateCounter = (el) => {
+    const target = parseInt(el.dataset.target);
+    const duration = 2000;
+    const start = performance.now();
+
+    const update = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * target);
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target;
+      }
+    };
+
+    requestAnimationFrame(update);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const num = entry.target.querySelector('.stat-number');
+        if (num && !num.classList.contains('counted')) {
+          num.classList.add('counted');
+          animateCounter(num);
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.stat-card').forEach(card => observer.observe(card));
+})();
+
+// ===== ГЕНЕРАТОР ПРОМПТОВ =====
+(function() {
+  const promptDatabase = {
+    product: {
+      cyberpunk: (desc) => `Professional product photography of ${desc}, neon cyberpunk aesthetic, holographic reflections, dark background with cyan and magenta rim lighting, 8k, ultra detailed, commercial photography, sharp focus --ar 3:4 --v 6`,
+      luxury: (desc) => `Luxury product shot of ${desc}, marble and gold background, soft studio lighting, elegant composition, high-end catalog style, premium materials, 8k, photorealistic --ar 3:4 --v 6`,
+      minimal: (desc) => `Minimalist product photography of ${desc}, clean white background, soft shadows, Scandinavian design aesthetic, professional studio lighting, 8k, crisp details --ar 3:4 --v 6`,
+      lifestyle: (desc) => `Lifestyle product photo of ${desc}, cozy home interior, natural window light, warm tones, authentic moment, Instagram aesthetic, 8k --ar 4:5 --v 6`,
+      studio: (desc) => `Studio product photography of ${desc}, seamless white background, three-point lighting setup, professional e-commerce style, sharp details, 8k --ar 1:1 --v 6`
+    },
+    model: {
+      cyberpunk: (desc) => `Full body fashion photo of AI model wearing ${desc}, cyberpunk city background, neon lights, futuristic aesthetic, editorial fashion, 8k --ar 9:16 --v 6`,
+      luxury: (desc) => `High fashion editorial of AI model in ${desc}, Paris rooftop, golden hour, haute couture style, Vogue aesthetic, 8k --ar 9:16 --v 6`,
+      minimal: (desc) => `Clean fashion lookbook of AI model wearing ${desc}, white cyclorama, minimal styling, contemporary fashion, 8k --ar 3:4 --v 6`,
+      lifestyle: (desc) => `Casual lifestyle photo of AI model in ${desc}, urban cafe setting, natural pose, street style photography, 8k --ar 4:5 --v 6`,
+      studio: (desc) => `Professional model test shot wearing ${desc}, neutral grey background, clean studio lighting, model agency style, 8k --ar 3:4 --v 6`
+    },
+    banner: {
+      cyberpunk: (desc) => `Wide cyberpunk banner featuring ${desc}, neon cityscape, futuristic typography space, dark moody atmosphere, cinematic composition, 8k --ar 16:9 --v 6`,
+      luxury: (desc) => `Elegant luxury banner with ${desc}, black and gold palette, premium textures, sophisticated layout, high-end advertising, 8k --ar 16:9 --v 6`,
+      minimal: (desc) => `Clean minimal banner design with ${desc}, lots of negative space, modern typography, pastel accents, contemporary aesthetic, 8k --ar 16:9 --v 6`,
+      lifestyle: (desc) => `Warm lifestyle banner showing ${desc}, happy people, sunny atmosphere, authentic emotions, social media ready, 8k --ar 16:9 --v 6`,
+      studio: (desc) => `Professional commercial banner with ${desc}, clean studio setup, bold product focus, corporate advertising style, 8k --ar 16:9 --v 6`
+    },
+    social: {
+      cyberpunk: (desc) => `Instagram post featuring ${desc}, cyberpunk aesthetic, neon glow effects, trending visual style, engagement optimized, square format, 8k --ar 1:1 --v 6`,
+      luxury: (desc) => `Premium Instagram carousel with ${desc}, aspirational lifestyle, champagne and caviar vibes, influencer aesthetic, 8k --ar 4:5 --v 6`,
+      minimal: (desc) => `Aesthetic Instagram post with ${desc}, flat lay composition, muted tones, Pinterest-worthy, minimal caption space, 8k --ar 4:5 --v 6`,
+      lifestyle: (desc) => `Relatable social media post with ${desc}, candid moment, warm filter, story-driven, high engagement potential, 8k --ar 4:5 --v 6`,
+      studio: (desc) => `Clean product post for ${desc}, professional lighting, brand-consistent colors, e-commerce optimized, 8k --ar 1:1 --v 6`
+    },
+    video: {
+      cyberpunk: (desc) => `Short-form video script for ${desc}: Hook "Stop scrolling if you want...", fast cuts, neon transitions, trending audio, call-to-action at 0:08, 15-30 seconds, cyberpunk aesthetic`,
+      luxury: (desc) => `Premium Reels script for ${desc}: Slow-motion opening, aspirational lifestyle shots, smooth transitions, luxury brand music, elegant voiceover, 30-45 seconds`,
+      minimal: (desc) => `Minimalist TikTok script for ${desc}: Clean transitions, ASMR-style product sounds, text overlays, satisfying reveal, trending minimal audio, 15-30 seconds`,
+      lifestyle: (desc) => `Viral TikTok script for ${desc}: Day-in-the-life format, authentic storytelling, relatable humor, trending sound, duet-friendly ending, 30-60 seconds`,
+      studio: (desc) => `Professional product video script for ${desc}: 360° showcase, feature highlights, comparison shots, clear CTA, professional voiceover, 30-45 seconds`
+    }
+  };
+
+  const generateBtn = document.getElementById('generatePromptBtn');
+  const copyBtn = document.getElementById('copyPromptBtn');
+  const resultBox = document.getElementById('promptResult');
+
+  if (generateBtn) {
+    generateBtn.addEventListener('click', () => {
+      const type = document.getElementById('promptType').value;
+      const style = document.getElementById('promptStyle').value;
+      const desc = document.getElementById('promptDesc').value.trim() || 'premium product';
+
+      const prompt = promptDatabase[type]?.[style]?.(desc) || 
+        `Professional ${type} content featuring ${desc}, ${style} aesthetic, high quality, 8k --v 6`;
+
+      resultBox.textContent = prompt;
+      resultBox.style.borderColor = 'var(--glow-color)';
+
+      showToast('✨ Промпт сгенерирован! Можете копировать и использовать в Midjourney/Stable Diffusion');
+    });
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const text = resultBox.textContent;
+      if (text && text !== 'Выберите параметры и нажмите «Сгенерировать промпт»') {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('📋 Промпт скопирован в буфер обмена!');
+          copyBtn.textContent = '✅ Скопировано!';
+          setTimeout(() => { copyBtn.textContent = '📋 Копировать'; }, 2000);
+        });
+      } else {
+        showToast('Сначала сгенерируйте промпт!', 'error');
+      }
+    });
+  }
+})();
+
+// ===== AI-ЧАТ ВИДЖЕТ =====
+(function() {
+  const chatWidget = document.getElementById('aiChatWidget');
+  const chatToggle = document.getElementById('aiChatToggle');
+  const chatPanel = document.getElementById('aiChatPanel');
+  const chatClose = document.getElementById('aiChatClose');
+  const chatMessages = document.getElementById('aiChatMessages');
+  const chatInput = document.getElementById('aiChatInput');
+  const chatSend = document.getElementById('aiChatSend');
+  const quickButtons = document.querySelectorAll('.ai-chat-quick-btn');
+
+  const responses = {
+    'Сколько стоит нейросессия?': 'Нейросессия стоит от 1 000 ₽ за арт. Пакет из 30 артов — 25 000 ₽. Точная стоимость зависит от сложности и количества. Хотите, я передам ваш вопрос Сергею для персонального расчёта?',
+    'Какие сроки изготовления?': 'Стандартный срок — 3–5 рабочих дней на пакет из 10–15 артов. Срочные заказы — от 24 часов (доплата +30%). Карточки маркетплейсов — 1–2 дня.',
+    'Можно ли увидеть примеры работ?': 'Конечно! У Сергея есть портфолио в Instagram @freeman251983 и Telegram @sergei_freeman25. Также могу отправить примеры конкретно под вашу нишу — уточните, что именно интересует?',
+    'Как начать сотрудничество?': 'Просто! 1) Заполните квиз-форму на сайте, 2) Напишите в Telegram @sergei_freeman25, или 3) Прямо сейчас задайте вопрос — я передам Сергею и он свяжется в течение часа.',
+    'default': 'Отличный вопрос! Я передам его Сергею лично — он ответит вам в Telegram в течение часа. Напишите ему сразу: @sergei_freeman25 для ускорения!'
+  };
+
+  const addMessage = (text, isUser = false) => {
+    const msg = document.createElement('div');
+    msg.className = `ai-chat-message ${isUser ? 'user-message' : 'ai-message'}`;
+    msg.innerHTML = `
+      <div class="ai-chat-bubble">${text}</div>
+      <div class="ai-chat-time">${new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' })}</div>
+    `;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  };
+
+  const showTyping = () => {
+    const typing = document.createElement('div');
+    typing.className = 'ai-chat-message ai-message ai-typing-indicator';
+    typing.innerHTML = `
+      <div class="ai-chat-bubble ai-typing">
+        <div class="ai-typing-dot"></div>
+        <div class="ai-typing-dot"></div>
+        <div class="ai-typing-dot"></div>
+      </div>
+    `;
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typing;
+  };
+
+  const removeTyping = (el) => el.remove();
+
+  const handleQuestion = (question) => {
+    addMessage(question, true);
+    const typing = showTyping();
+
+    setTimeout(() => {
+      removeTyping(typing);
+      const response = responses[question] || responses['default'];
+      addMessage(response);
+    }, 800 + Math.random() * 600);
+  };
+
+  chatToggle.addEventListener('click', () => {
+    chatPanel.classList.toggle('open');
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatPanel.classList.remove('open');
+  });
+
+  quickButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleQuestion(btn.dataset.question);
+    });
+  });
+
+  chatSend.addEventListener('click', () => {
+    const text = chatInput.value.trim();
+    if (text) {
+      handleQuestion(text);
+      chatInput.value = '';
+    }
+  });
+
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      chatSend.click();
+    }
+  });
+
+  // Auto-open after 15 seconds
+  setTimeout(() => {
+    if (!chatPanel.classList.contains('open')) {
+      chatToggle.style.animation = 'chatPulse 2s ease-in-out 3';
+    }
+  }, 15000);
+})();
+</script>
+
 </body>
 </html>
