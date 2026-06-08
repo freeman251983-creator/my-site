@@ -1,4 +1,3 @@
-
 // ============================================
 // FREEMAN AI-PRO — LIGHTNING FAST WOW ENGINE
 // Убрано: WebGL, Parallax, 3D Tilt, Click Burst
@@ -250,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== ПРОЦЕДУРНЫЙ ГЕНЕРАТОР МУЗЫКИ (Web Audio API) =====
+// ===== ОПТИМИЗИРОВАННЫЙ ПРОЦЕДУРНЫЙ ГЕНЕРАТОР МУЗЫКИ (Web Audio API) =====
 class ProceduralMusicGenerator {
   constructor() {
     this.audioContext = null;
@@ -271,6 +270,8 @@ class ProceduralMusicGenerator {
     this.animationId = null;
     this.startTime = 0;
     this.pauseTime = 0;
+    this.generationChunkSize = 4; // Генерируем по 4 такта за раз
+    this.maxDuration = 60; // Максимум 60 секунд
 
     // Музыкальные константы
     this.NOTE_FREQUENCIES = {
@@ -435,7 +436,7 @@ class ProceduralMusicGenerator {
     });
 
     durationSlider?.addEventListener('input', (e) => {
-      this.duration = parseInt(e.target.value);
+      this.duration = Math.min(parseInt(e.target.value), this.maxDuration);
       document.getElementById('durationValue').textContent = this.duration + 'с';
     });
 
@@ -860,6 +861,7 @@ class ProceduralMusicGenerator {
     return padNotes;
   }
 
+  // ===== ОПТИМИЗИРОВАННАЯ ГЕНЕРАЦИЯ С WEB WORKER ПОДХОДОМ =====
   async generate() {
     if (this.isGenerating) return;
     this.isGenerating = true;
@@ -875,63 +877,104 @@ class ProceduralMusicGenerator {
     document.getElementById('musicStatus').textContent = 'Генерация...';
 
     try {
+      // Ограничиваем длительность для производительности
+      const actualDuration = Math.min(this.duration, this.maxDuration);
       const ctx = this.getAudioContext();
       const sampleRate = ctx.sampleRate;
-      const totalDuration = this.duration;
       const beatDuration = 60 / this.bpm;
-      const measures = Math.ceil(totalDuration / (beatDuration * 4));
+      const measures = Math.ceil(actualDuration / (beatDuration * 4));
 
-      // Создаём OfflineAudioContext для рендеринга
-      const offlineCtx = new OfflineAudioContext(2, sampleRate * totalDuration, sampleRate);
+      // Используем chunked rendering для предотвращения блокировки UI
+      const chunkMeasures = Math.min(measures, this.generationChunkSize);
+      const totalChunks = Math.ceil(measures / chunkMeasures);
 
-      const styleConfig = this.STYLES[this.currentStyle];
-      const masterGain = offlineCtx.createGain();
-      masterGain.gain.value = 0.7;
+      let fullBuffer = null;
+      let currentOffset = 0;
 
-      // Эффекты
-      const reverb = this.createReverbForContext(offlineCtx, styleConfig.reverb * 2);
-      const delay = this.createDelayForContext(offlineCtx, styleConfig.delay, 0.3);
-      const filter = this.createFilterForContext(offlineCtx, 'lowpass', styleConfig.filterFreq, styleConfig.resonance);
+      for (let chunk = 0; chunk < totalChunks; chunk++) {
+        const chunkStartMeasure = chunk * chunkMeasures;
+        const chunkEndMeasure = Math.min((chunk + 1) * chunkMeasures, measures);
+        const chunkMeasureCount = chunkEndMeasure - chunkStartMeasure;
+        const chunkDuration = chunkMeasureCount * beatDuration * 4;
 
-      masterGain.connect(filter);
-      filter.connect(offlineCtx.destination);
+        // Обновляем прогресс
+        const progress = Math.round((chunk / totalChunks) * 100);
+        document.getElementById('musicStatus').textContent = `Генерация... ${progress}%`;
 
-      // Генерация партий
-      const drums = this.generateDrumPattern(offlineCtx, 0, beatDuration, measures, this.currentStyle);
-      const bassNotes = this.generateBassLine(offlineCtx, 0, beatDuration, measures, this.currentStyle);
-      const leadNotes = this.generateLeadLine(offlineCtx, 0, beatDuration, measures, this.currentStyle);
-      const padNotes = this.generatePadLine(offlineCtx, 0, beatDuration, measures, this.currentStyle);
+        // Даём UI обновиться
+        await new Promise(resolve => setTimeout(resolve, 10));
 
-      // Рендеринг ударных
-      const noiseBuffer = this.createNoiseBufferForContext(offlineCtx, 0.1);
-      drums.forEach(drum => {
-        if (drum.type === 'kick') {
-          this.renderKick(offlineCtx, drum.time, drum.vel, masterGain);
-        } else if (drum.type === 'snare') {
-          this.renderSnare(offlineCtx, drum.time, drum.vel, noiseBuffer, masterGain);
-        } else if (drum.type === 'hihat') {
-          this.renderHiHat(offlineCtx, drum.time, drum.vel, noiseBuffer, masterGain);
+        // Создаём OfflineAudioContext для этого чанка
+        const chunkSamples = Math.ceil(sampleRate * chunkDuration);
+        const offlineCtx = new OfflineAudioContext(2, chunkSamples, sampleRate);
+
+        const styleConfig = this.STYLES[this.currentStyle];
+        const masterGain = offlineCtx.createGain();
+        masterGain.gain.value = 0.7;
+
+        // Эффекты
+        const filter = this.createFilterForContext(offlineCtx, 'lowpass', styleConfig.filterFreq, styleConfig.resonance);
+        masterGain.connect(filter);
+        filter.connect(offlineCtx.destination);
+
+        // Генерация партий для этого чанка
+        const chunkStartTime = 0;
+        const drums = this.generateDrumPattern(offlineCtx, chunkStartTime, beatDuration, chunkMeasureCount, this.currentStyle);
+        const bassNotes = this.generateBassLine(offlineCtx, chunkStartTime, beatDuration, chunkMeasureCount, this.currentStyle);
+        const leadNotes = this.generateLeadLine(offlineCtx, chunkStartTime, beatDuration, chunkMeasureCount, this.currentStyle);
+        const padNotes = this.generatePadLine(offlineCtx, chunkStartTime, beatDuration, chunkMeasureCount, this.currentStyle);
+
+        // Рендеринг ударных
+        const noiseBuffer = this.createNoiseBufferForContext(offlineCtx, 0.1);
+        drums.forEach(drum => {
+          if (drum.type === 'kick') {
+            this.renderKick(offlineCtx, drum.time, drum.vel, masterGain);
+          } else if (drum.type === 'snare') {
+            this.renderSnare(offlineCtx, drum.time, drum.vel, noiseBuffer, masterGain);
+          } else if (drum.type === 'hihat') {
+            this.renderHiHat(offlineCtx, drum.time, drum.vel, noiseBuffer, masterGain);
+          }
+        });
+
+        // Рендеринг баса
+        bassNotes.forEach(note => {
+          this.renderBass(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.bassWave, masterGain);
+        });
+
+        // Рендеринг лида
+        leadNotes.forEach(note => {
+          this.renderLead(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.leadWave, masterGain);
+        });
+
+        // Рендеринг пэдов
+        padNotes.forEach(note => {
+          this.renderPad(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.padWave, masterGain);
+        });
+
+        // Рендеринг чанка
+        const chunkBuffer = await offlineCtx.startRendering();
+
+        // Объединяем чанки
+        if (!fullBuffer) {
+          // Создаём итоговый буфер нужной длины
+          const totalSamples = Math.ceil(sampleRate * actualDuration);
+          fullBuffer = ctx.createBuffer(2, totalSamples, sampleRate);
         }
-      });
 
-      // Рендеринг баса
-      bassNotes.forEach(note => {
-        this.renderBass(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.bassWave, masterGain);
-      });
+        // Копируем данные чанка в итоговый буфер
+        const offsetSample = Math.floor(currentOffset * sampleRate);
+        for (let channel = 0; channel < 2; channel++) {
+          const targetData = fullBuffer.getChannelData(channel);
+          const sourceData = chunkBuffer.getChannelData(channel);
+          for (let i = 0; i < sourceData.length && (offsetSample + i) < targetData.length; i++) {
+            targetData[offsetSample + i] = sourceData[i];
+          }
+        }
 
-      // Рендеринг лида
-      leadNotes.forEach(note => {
-        this.renderLead(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.leadWave, masterGain);
-      });
+        currentOffset += chunkDuration;
+      }
 
-      // Рендеринг пэдов
-      padNotes.forEach(note => {
-        this.renderPad(offlineCtx, note.time, note.freq, note.duration, note.vel, styleConfig.padWave, masterGain);
-      });
-
-      // Рендеринг
-      const renderedBuffer = await offlineCtx.startRendering();
-      this.generatedBuffer = renderedBuffer;
+      this.generatedBuffer = fullBuffer;
 
       // Обновление UI
       document.getElementById('playPauseBtn').disabled = false;

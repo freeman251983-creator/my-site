@@ -81,7 +81,7 @@
     body {
       font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
       background: 
-        linear-gradient(135deg, rgba(4, 5, 8, 0.80) 0%, rgba(4, 5, 8, 0.65) 50%, rgba(4, 5, 8, 0.80) 100%),
+        linear-gradient(135deg, rgba(4, 5, 8, 0.35) 0%, rgba(4, 5, 8, 0.25) 50%, rgba(4, 5, 8, 0.35) 100%),
         url('images/baner.webp');
       background-size: cover;
       background-position: center;
@@ -339,10 +339,10 @@
       position: relative; 
       z-index: 10; 
       padding: 120px 0;
-      background: linear-gradient(to bottom, rgba(4, 5, 8, 0.75), rgba(4, 5, 8, 0.80));
+      background: linear-gradient(to bottom, rgba(4, 5, 8, 0.45), rgba(4, 5, 8, 0.55));
     }
     .section-dark { 
-      background: linear-gradient(to bottom, rgba(10, 11, 16, 0.78), rgba(4, 5, 8, 0.82));
+      background: linear-gradient(to bottom, rgba(10, 11, 16, 0.50), rgba(4, 5, 8, 0.60));
     }
 
     .badge {
@@ -462,7 +462,7 @@
     /* ===== СТИЛИ ИНТЕРАКТИВНОГО СЛАЙДЕРА СРАВНЕНИЯ (BEFORE/AFTER) ===== */
     .comparison-section {
       padding: 100px 0;
-      background: linear-gradient(to bottom, rgba(4, 5, 8, 0.70), rgba(4, 5, 8, 0.75));
+      background: linear-gradient(to bottom, rgba(4, 5, 8, 0.40), rgba(4, 5, 8, 0.50));
     }
     .comparison-container {
       max-width: 900px;
@@ -924,7 +924,7 @@
     }
 
     /* FOOTER */
-    .footer { padding: 60px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); font-size: 1.05rem; color: #64748b; position: relative; z-index: 10; }
+    .footer { padding: 60px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); font-size: 1.05rem; color: #64748b; position: relative; z-index: 10; background: linear-gradient(to bottom, rgba(4,5,8,0.50), rgba(4,5,8,0.60)); }
     .footer-logo-img { margin: 0 auto 15px; width: 80px; height: 80px; }
     .footer-text { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; font-weight: 800; color: #fff; margin: 15px 0; }
 
@@ -1776,7 +1776,20 @@ body.light-theme .theme-toggle {
   30% { transform: translateY(-6px); }
 }
 
-  </style>
+  
+/* Footer logo transparency */
+.footer-logo-img {
+  opacity: 0.7;
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(56,189,248,0.3));
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.footer-logo-img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+</style>
 </head>
 
 <body>
@@ -2706,7 +2719,7 @@ body.light-theme .theme-toggle {
 
 <footer class="footer">
   <div class="container">
-    <img decoding="async" src="images/logo.png" alt="Freeman Logo" class="footer-logo-img" loading="lazy" width="80" height="80" onerror="this.onerror=null; this.src='https://placehold.co/80x80/0a0b10/38bdf8?text=AI-PRO';">
+    <img decoding="async" src="images/logo.png" alt="Freeman Logo" class="footer-logo-img" loading="lazy" width="80" height="80" style="opacity:0.7; filter:brightness(1.2) drop-shadow(0 0 10px rgba(56,189,248,0.3)); mix-blend-mode:screen;" onerror="this.onerror=null; this.src='https://placehold.co/80x80/0a0b10/38bdf8?text=AI-PRO';">
     <div class="footer-text">FREEMAN<span> · AI-PRO</span></div>
     <p>© 2026 <strong>FREEMAN</strong> · AI Media Creator · Сергей Абрамчук</p>
     <p>Все права защищены. Дизайн, аниация, тексты и интерактивные слои интегрированы через ИИ.</p>
@@ -2871,9 +2884,6 @@ document.addEventListener('click', (e) => {
   }
 });
 </script>
-
-<script>
-
 
 <script>
 // ===== СКРИПТ 6: ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР ROI =====
